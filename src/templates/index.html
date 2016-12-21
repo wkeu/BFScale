@@ -1,0 +1,256 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <!--[if IE]>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <![endif]-->
+    <title>The BIG TEMPLATE : RESPONSIVE and FREE</title>
+    <!-- BOOTSTRAP CORE STYLE CSS -->
+    <link href="{{url_for('static', filename='styles/bootstrap.css')}}" rel="stylesheet" />
+    <!-- FONT AWESOME CSS -->
+    <link href="{{url_for('static', filename='styles/font-awesome.css')}}" rel="stylesheet" />
+    <!-- ANIMATION STYLES -->
+    <link href="{{url_for('static', filename='styles/animate.css')}}" rel="stylesheet"  />
+    <!-- CUSTOM STYLE CSS -->
+    <link href="{{url_for('static', filename='styles/style.css')}}" rel="stylesheet"  />
+    <!-- GOOGLE FONT -->
+    <link href="{{url_for('static', filename='styles/bootstrap.css')}}" rel="stylesheet" />
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css' />
+</head>
+<body>
+
+    <div id="home-sec">
+
+        <div id="carousel-example" class="carousel slide" data-ride="carousel">
+
+            <div class="carousel-inner">
+                <div class="item active">
+
+                    <img src="/static/styles/ruler.jpg" width="1920" height="503" style="vertical-align:middle" alt=""/>
+                    <div class="carousel-caption">
+                        <h1 class="slide-h1 wow bounceInDown" data-wow-duration="1s">BANANA FOR SCALE</h1>
+                        <h2 class="slide-h2 wow bounceInLeft" data-wow-duration="2s" data-wow-delay="1s">ULTIMATE MEASURING TOOL</h2>
+                    </div>
+
+                        <form id="upload-form" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+                            <input type="file" name = "file" accept="image/*" multiple>
+                            <input type="submit" value="send">
+                        </form>
+                </div>
+<!--                 <div class="item">
+                    <img src="assets/img/1.jpg" alt="" />
+                    <div class="carousel-caption">
+                        <h1 class="slide-h1 wow bounceInDown" data-wow-duration="2s">RESPONSIVE DESIGN</h1>
+                        <h2 class="slide-h2 wow bounceInLeft" data-wow-duration="2s" data-wow-delay="1s">FREE TO USE</h2>
+                    </div>
+                </div> -->
+   <!--              <div class="item">
+                    <img src="assets/img/1.jpg" alt="" />
+                    <div class="carousel-caption">
+                        <h1 class="slide-h1 wow bounceInDown" data-wow-duration="2s">HANDCRAFTED </h1>
+                        <h2 class="slide-h2 wow bounceInLeft" data-wow-duration="2s" data-wow-delay="1s">ONLY FOR YOU</h2>
+                    </div>
+                </div> -->
+            </div>
+            <!--INDICATORS-->
+<!--             <ol class="carousel-indicators">
+                <li data-target="#carousel-example" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-example" data-slide-to="1"></li>
+                <li data-target="#carousel-example" data-slide-to="2"></li>
+            </ol> -->
+
+        </div>
+    </div>
+    <!-- HOME SECTION END-->
+<!--     <div id="nav">
+        <ul class="list-unstyled">
+            <li><a data-toggle="tooltip" data-placement="left" title="Home" href="#home-sec">Home</a></li>
+            <li><a data-toggle="tooltip" data-placement="left" title="About" href="#about-sec">About</a></li>
+            <li><a data-toggle="tooltip" data-placement="left" title="Features" href="#features-sec">Features</a></li>
+            <li><a data-toggle="tooltip" data-placement="left" title="Team" href="#team-sec">Team</a></li>
+            <li><a data-toggle="tooltip" data-placement="left" title="Contact" href="#contact-sec">Contact</a></li>
+        </ul>
+    </div> -->
+    <!-- NAV SECTION END-->
+    <section id="about-sec">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-8 col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-12">
+                    <h1 data-scroll-reveal="enter from the bottom after 0.1s">ABOUT </h1>
+                    <p data-scroll-reveal="enter from the bottom after 0.3s">
+                    Banana For Scale is an online measuring tool for measuring the
+                    dimensions of objects both large and small using reference objects.
+                    Banana For Scale was developed by master's students from UCD as a 
+                    Final project for Software Engineering.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- ABOUT SECTION END-->
+    <section id="features-sec">
+        <div class="container ">
+            <div class="row pad-btm">
+                <div class="col-lg-8 col-md-8 col-sm-8 col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-12">
+                    <h1 data-scroll-reveal="enter from the bottom after 0.1s">How To Use? </h1>
+                    <p data-scroll-reveal="enter from the bottom after 0.3s">
+                    Upload your image using the upload button above. In the image there
+                    must be a reference object of known dimensions. The reference object
+                    must also be located on the left hand side of the image.
+                    </p>
+                </div>
+
+            </div>
+            <div class="row ">
+                <div class="col-lg-4 col-md-4 col-sm-4  col-xs-12 text-center" data-scroll-reveal="enter from the bottom after 0.5s">
+                    <i class ="fa fa-upload fa-5x" aria-hidden="true"></i>
+                    <h4 >Upload Image</h4>
+                    <p>
+                        JPG/PNG
+                    </p>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4  col-xs-12 text-center" data-scroll-reveal="enter from the bottom after 0.7s" >
+                    <i class="fa fa-hand-o-up fa-5x" aria-hidden="true"></i>
+                    <h4>Choose Reference Object</h4>
+                    <p>
+                        Choose Reference object from list (Must be in image)
+                    </p>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4  col-xs-12 text-center" data-scroll-reveal="enter from the bottom after 0.9s">
+                    <i class="fa fa-history fa-5x"></i>
+                    <h4>Return Dimensions</h4>
+                    <p>
+                        Wait for BFS to finish and return dimensions
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+    <!-- FEATURE SECTION END-->
+    <section id="team-sec">
+        <div class="container">
+            <div class="row pad-btm">
+                <div class="col-lg-8 col-md-8 col-sm-8 col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-12">
+                    <h1 data-scroll-reveal="enter from the bottom after 0.1s">TEAM </h1>
+                    <p data-scroll-reveal="enter from the bottom after 0.3s">
+                        <!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                  Mauris sagittis felis dolor, id gravida tellus tempor vitae. In efficitur ipsum non faucibus tempus. -->
+                    </p>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-2  col-xs-12 " data-scroll-reveal="enter from the bottom after 0.4s">
+                    <img src="assets/img/1t.jpg" class="img-circle img-responsive set-img" />
+
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4  col-xs-12 " data-scroll-reveal="enter from the bottom after 0.5s">
+                    <h2>Cian</h2>
+                    <p>
+<!--                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                          Lorem ipsum dolor sit amet. -->
+                    </p>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2  col-xs-12 " data-scroll-reveal="enter from the bottom after 0.6s">
+                    <img src="assets/img/2t.jpg" class="img-circle img-responsive set-img" />
+
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4  col-xs-12 " data-scroll-reveal="enter from the bottom after 0.7s">
+                    <h2>Matt</h2>
+                    <p>
+<!--                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                           Lorem ipsum dolor sit amet. -->
+                    </p>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2  col-xs-12 " data-scroll-reveal="enter from the bottom after 0.6s">
+                    <img src="assets/img/2t.jpg" class="img-circle img-responsive set-img" />
+
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4  col-xs-12 " data-scroll-reveal="enter from the bottom after 0.7s">
+                    <h2>Kaustav</h2>
+                    <p>
+<!--                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                           Lorem ipsum dolor sit amet. -->
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+    <!-- TEAM SECTION END-->
+    <section id="contact-sec">
+        <div class="container">
+            <div class="row pad-btm">
+                <div class="col-lg-8 col-md-8 col-sm-8 col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-12">
+                    <h1 data-scroll-reveal="enter from the bottom after 0.1s">CONTACT </h1>
+                    <p data-scroll-reveal="enter from the bottom after 0.3s">
+                        <!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit.  -->
+                  <!-- Mauris sagittis felis dolor, id gravida tellus tempor vitae. In efficitur ipsum non faucibus tempus. -->
+                    </p>
+                </div>
+
+            </div>
+            <div class="row pad-btm">
+
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12  " data-scroll-reveal="enter from the bottom after 0.5s">
+                    <h2>Our Location</h2>
+                    <p>
+                        <!-- 234/89 , UGCH BUILDING HOUSE, -->
+                           <br />
+                        <!-- DOUBLE LANE, NEW YORK CITY,  -->
+                           <br />
+                        <!-- UNITED STATES -->
+                    </p>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2  col-xs-12 " data-scroll-reveal="enter from the bottom after 0.6s">
+                    <img src="assets/img/1t.jpg" class="img-circle img-responsive cnt-img" />
+
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4  col-xs-12 " data-scroll-reveal="enter from the bottom after 0.6s">
+                    <p>
+<!--                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                          Lorem ipsum dolor sit amet. -->
+                    </p>
+                    <div class="form-group">
+                        <input type="text" class="form-control" />
+                        <br />
+                        <a href="#" class="btn btn-primary">SUBSCRIBE FOR UPDATES</a>
+                    </div>
+                </div>
+
+            </div>
+            
+                 </div>
+
+    </section>
+    <!-- CONTACT SECTION END-->
+    <div id="footer-sec">
+           &nbsp;2014 Yourdomain.com | 
+             <a href="http://binarytheme.com" style="font-size: 14px; color: #fff" target="_blank">Design by : binarytheme.com</a>
+
+    </div>
+    <!-- FOOTER SECTION END-->
+    <!--CORE SCRIPTS-->
+    <script src="/static/styles/jquery-1.11.1.js"></script>
+    <!--BOOTSTRAP SCRIPTS-->
+    <script src="/static/styles/bootstrap.js"></script>
+    <!--WOW SCRIPTS-->
+    <script src="/static/styles/wow.js"></script>
+    <!--SCROLL SCRIPTS-->
+    <script src="/static/styles/jquery.smooth-scroll.min.js"></script>
+    <!--SCROLL ANIMATION SCRIPTS-->
+    <script src="/static/styles/scrollReveal.js"></script>
+    <!--CUSTOM SCRIPTS-->
+    <script src="/static/styles/custom.js"></script>
+</body>
+
+</html>
