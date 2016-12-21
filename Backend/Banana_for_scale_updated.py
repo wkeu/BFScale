@@ -14,9 +14,15 @@ Contour_threshold_Area = 200
 
 class Image:
 
-  def __init__(self):
-      self.test="Test"
+  #Class Varibles
+  ref_width = 2.9
 
+  #Class Constructor
+  def __init__(self,fname_image):
+      self.fname_image=fname_image
+  #
+  # Class Methods
+  #
   #TODO:Not clear the difference between x_cord and x_cordinate
   def midpoint(self,x_cord, y_cord):
         x_cordinate = (x_cord[0] + y_cord[0]) * 0.5
@@ -24,16 +30,15 @@ class Image:
         return (x_cordinate, y_cordinate)
 
   #TODO:Comment on how it works
-  def get_pixel_per_unit(self,cntores, ref_width):
-    for c in cntores:
-        box = self.get_bounding_box(c)
+  def get_pixel_per_unit(self,ref_object, ref_width):
+        box = self.get_bounding_box(ref_object)
         points = self.get_distance_cordinate_points(box)
         distX, distY = points[0][0], points[0][1] #TODO: Bad Smell distX never used
         pixelsPerUnit = distY / ref_width
         dimensionY = distY / pixelsPerUnit
         if dimensionY == ref_width:
-            break
-    return pixelsPerUnit
+          print("dimensionY == ref_width")
+        return pixelsPerUnit
 
 
   def get_bounding_box(self, c):
@@ -71,10 +76,6 @@ class Image:
     (X_top_left_top_right, Y_top_left_top_right), (X_bottom_left_bottom_right, Y_bottom_left_bottom_right),
     (X_top_left_bottom_left, Y_top_left_bottom_left), (X_top_right_bottom_right, Y_top_right_bottom_right)))
 
-  def test_method(self,message):
-      print("Test message"+message)
-      print(self.test)
-
   def extract_contors_and_import_image(self, fname_image):
       # read the image
       # image = cv2.imread(args["image"])
@@ -100,9 +101,14 @@ class Image:
     ref_width = 2.9
 
     cntores, image = self.extract_contors_and_import_image(fname_image)
+    
+    # TODO: comment on whats happening here, the if statment is never used
+    #Wil not work without this line
     cntores = cntores[0] if imutils.is_cv2() else cntores[1]
-
-    pixelsPerUnit = self.get_pixel_per_unit(cntores, ref_width)
+    ref_object=cntores[0]
+    
+    #TODO:
+    pixelsPerUnit = self.get_pixel_per_unit(ref_object, ref_width)
     print("calculated unit pixels ", pixelsPerUnit)
 
     for c in cntores:
@@ -157,7 +163,6 @@ class Image:
         cv2.waitKey(0)
 
 #Test of the code
-test_image=Image()
-test_image.test_method("12345678")
+test_image=Image("Image_refrence_4.jpg")
 test_image.main()
 
