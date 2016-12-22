@@ -9,13 +9,14 @@ BLUE = (0, 0, 255)
 RED = (255, 0, 0)
 PINK = (255, 0, 255)
 WHITE = (255, 255, 255)
-Contour_threshold_Area = 200
+Contour_threshold_Area = 400 #TODO:Make this a value of related to the resolution of the image
 
 class Image:
 
   #Class Varibles
-  ref_width = 2.9
-  ref_object_index= 0 #measurment
+  ref_width = 0.9 #Size of a coin
+  ref_object_index= 2 #Hardcoded Value
+  #TODO: Image is a class varible 
 
   #Class Constructor
   def __init__(self,fname_image):
@@ -39,8 +40,8 @@ class Image:
         distX, distY = points[0][0], points[0][1] #TODO: Bad Smell distX never used
         pixelsPerUnit = distY / ref_width
         dimensionY = distY / pixelsPerUnit
-        print("sucessful excution of get_pixel_per_unit")
-        print("ref object is :" + str(ref_object))
+       # print("sucessful excution of get_pixel_per_unit")
+       # print("ref object is :" + str(ref_object))
         if dimensionY == ref_width:
           print("dimensionY == ref_width")
         return pixelsPerUnit
@@ -83,10 +84,10 @@ class Image:
     (X_top_left_top_right, Y_top_left_top_right), (X_bottom_left_bottom_right, Y_bottom_left_bottom_right),
     (X_top_left_bottom_left, Y_top_left_bottom_left), (X_top_right_bottom_right, Y_top_right_bottom_right)))
 
-  def extract_contors_and_import_image(self, fname_image):
+  def extract_contors_and_import_image(self):
       # read the image
       # image = cv2.imread(args["image"])
-      image = cv2.imread(fname_image)
+      image = cv2.imread(self.fname_image)
       # convert the image to gray scale, and blur it using GaussianBlur
       gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
       gray = cv2.GaussianBlur(gray, (7, 7), 0)
@@ -113,6 +114,13 @@ class Image:
                   WHITE, 2)
       cv2.putText(orig, "{:.1f}in".format(distY / pixelsPerUnit),
                   (int(X_top_right_bottom_right + 10), int(Y_top_right_bottom_right)), cv2.FONT_HERSHEY_SIMPLEX, 0.65,
+                  WHITE, 2)
+      
+  def print_number_on_object(self, X_top_left_top_right, X_top_right_bottom_right, Y_top_left_top_right,
+                                 Y_top_right_bottom_right, index, orig):
+      # Drawing the objects according to their size on the image
+      cv2.putText(orig, format(index),
+                  (int(X_top_left_top_right - 15), int(Y_top_left_top_right - 10)), cv2.FONT_HERSHEY_SIMPLEX, 0.65,
                   WHITE, 2)
 
   def draw_centre_line(self, X_bottom_left_bottom_right, X_top_left_bottom_left, X_top_left_top_right,
@@ -141,7 +149,7 @@ class Image:
     #TODO:Bad smell no need to pass self.fname_image
     #Import image and extract contors
     #TODO:Cntores should be a class varible as should image
-    cntores, image = self.extract_contors_and_import_image(self.fname_image)
+    cntores, image = self.extract_contors_and_import_image()
     
     # TODO: comment on whats happening here, the if statment is never used
     # TODO:
@@ -154,7 +162,7 @@ class Image:
     print("calculated unit pixels ", pixelsPerUnit)
 
     x=0
-    
+    orig = image.copy()
     for c in cnt:
         # if the contour is not sufficiently large, ignore it
         print(str(x))        
@@ -164,7 +172,7 @@ class Image:
 
         box = self.get_bounding_box(c)
         print("box in main ", box)
-        orig = image.copy()  #Copy the image so that we keep the orginal image intact
+       #0 orig = image.copy()  #Copy the image so that we keep the orginal image intact
         cv2.drawContours(orig, [box.astype("int")], -1, GREEN, 2) #Draw green box
 
         """
@@ -181,35 +189,39 @@ class Image:
         (X_top_left_bottom_left, Y_top_left_bottom_left) = points[1][2]
         (X_top_right_bottom_right, Y_top_right_bottom_right) = points[1][3]
 
+        self.print_number_on_object(X_top_left_top_right, X_top_right_bottom_right, Y_top_left_top_right,
+                                 Y_top_right_bottom_right, x, orig)
         # draw lines between the midpoints
+        """
         self.draw_centre_line(X_bottom_left_bottom_right, X_top_left_bottom_left, X_top_left_top_right,
                               X_top_right_bottom_right, Y_bottom_left_bottom_right, Y_top_left_bottom_left,
                               Y_top_left_top_right, Y_top_right_bottom_right, orig)
 
         self.print_dimensions_on_object(X_top_left_top_right, X_top_right_bottom_right, Y_top_left_top_right,
                                         Y_top_right_bottom_right, distX, distY, orig, pixelsPerUnit)
-
+        """
         # show the generated image
-        cv2.imshow("Image", orig)
-        cv2.waitKey(0)
+    cv2.imshow("Image", orig)            
+        
 
 class Measurment():
-    #Contor of intrest
+    #Contor of intres
+    #Index
     #Dimensions x,y
     #Location
     #Image with box
     
-    def __init__(self):
-        self.placeholder="Placeholder"
+    def __init__(self,cnt):
+        self.contor=cnt
     
     def rnd(self):
         print(self)
 
 #Test of the code
-test_image=Image("Image_refrence_4.jpg")
+test_image=Image("Image_refrence.jpg")
 test_image.main()
 
-cntores, image = test_image.extract_contors_and_import_image("Image_refrence_4.jpg")
+cntores, image = test_image.extract_contors_and_import_image()
 cnt1=cntores[0]
 cnt2=cntores[1]
 cnt3=cntores[2]
