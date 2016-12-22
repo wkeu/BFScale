@@ -11,6 +11,7 @@ RED = (255, 0, 0)
 PINK = (255, 0, 255)
 WHITE = (255, 255, 255)
 CYAN = (255,255,0)
+SUBDIR = ""
 Contour_threshold_Area = 400 #TODO:Make this a value of related to the resolution of the image
 
 class Image:
@@ -95,7 +96,7 @@ class Image:
   def extract_contors_and_import_image(self):
       # read the image
       # image = cv2.imread(args["image"])
-      image = cv2.imread(self.fname_image)
+      image = cv2.imread(self.fpath+self.fname_image)
       # convert the image to gray scale, and blur it using GaussianBlur
       gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
       gray = cv2.GaussianBlur(gray, (7, 7), 0)
@@ -195,7 +196,7 @@ class Image:
                                  Y_top_right_bottom_right, x, orig)
        
     #Save Generated Image    
-    cv2.imwrite("index_image_"+self.fname_image,orig)
+    cv2.imwrite(self.fpath+"index_image_"+self.fname_image,orig)
     return("index_image_"+self.fname_image,self.fpath)
     
   def generate_measured_image(self):
@@ -238,70 +239,9 @@ class Image:
     self.print_dimensions_on_object(X_top_left_top_right, X_top_right_bottom_right, Y_top_left_top_right,
                                         Y_top_right_bottom_right, distX, distY, orig, pixelsPerUnit)
     
-    cv2.imwrite("measured_image_"+self.fname_image,orig)
+    cv2.imwrite(self.fpath+"measured_image_"+self.fname_image,orig)
     return("measured_image_"+self.fname_image,self.fpath)
       
-  def main(self):
-
-    #TODO:Bad smell no need to pass self.fname_image
-    #Import image and extract contors
-    #TODO:Cntores should be a class varible as should image
-    cntores, image = self.extract_contors_and_import_image()
-    
-    # TODO: comment on whats happening here, the if statment is never used
-    # TODO:
-    #Wil not work without this line, dont know why
-    cnt = cntores[1] #Extract Each object
-    ref_object=cnt[self.ref_object_index] #Extract this magic number so it is ref_object index
-    
-    #TODO:Bad smell no need to pass self.ref_width
-    pixelsPerUnit = self.get_pixel_per_unit(ref_object, self.ref_width)
-    print("calculated unit pixels ", pixelsPerUnit)
-
-    x=0
-    orig = image.copy()
-    for c in cnt:
-        # if the contour is not sufficiently large, ignore it
-        print(str(x))        
-        x+=1
-        if cv2.contourArea(c) < Contour_threshold_Area:
-            continue
-
-        box = self.get_bounding_box(c)
-        print("box in main ", box)
-       #0 orig = image.copy()  #Copy the image so that we keep the orginal image intact
-        cv2.drawContours(orig, [box.astype("int")], -1, GREEN, 2) #Draw green box
-
-        """
-        # iterate over the original points to draw circles
-        for (x_points, y_points) in box:
-            cv2.circle(orig, (int(x_points), int(y_points)), 5, BLUE, -1)
-        """
-
-        points = self.get_distance_cordinate_points(box)
-        # TODO: Bad Smell Code is repiitive and unreeadible
-        distX, distY = points[0][0], points[0][1]
-        (X_top_left_top_right, Y_top_left_top_right) = points[1][0]
-        (X_bottom_left_bottom_right, Y_bottom_left_bottom_right) = points[1][1]
-        (X_top_left_bottom_left, Y_top_left_bottom_left) = points[1][2]
-        (X_top_right_bottom_right, Y_top_right_bottom_right) = points[1][3]
-        
-        
-        self.print_number_on_object(X_top_left_top_right, X_top_right_bottom_right, Y_top_left_top_right,
-                                 Y_top_right_bottom_right, x, orig)
-        # draw lines between the midpoints
-        """ 
-        self.draw_centre_line(X_bottom_left_bottom_right, X_top_left_bottom_left, X_top_left_top_right,
-                              X_top_right_bottom_right, Y_bottom_left_bottom_right, Y_top_left_bottom_left,
-                              Y_top_left_top_right, Y_top_right_bottom_right, orig)
-
-        self.print_dimensions_on_object(X_top_left_top_right, X_top_right_bottom_right, Y_top_left_top_right,
-                                        Y_top_right_bottom_right, distX, distY, orig, pixelsPerUnit)
-        """
-        # show the generated image
-    cv2.imshow("Image", orig)            
-        
-
 """
 Test1
 """
@@ -310,10 +250,9 @@ Test1
 #Test of Typical Usecase
 
 fname_raw_image="Image_refrence.jpg"
-file_path=""
+file_path="images/"
 
 working_image = Image(fname_raw_image,file_path)
-working_image.main()
 
 #Generate Image with numbered objects
 fname_index_image,path = working_image.generate_index_image()
