@@ -1,6 +1,17 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+
+<style>
+    div.wrapper {
+    text-align: center;
+}
+
+div.button {
+    position: absolute;
+    top: 50%;
+}
+</style>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="" />
@@ -33,13 +44,22 @@
                     <img src="/static/styles/ruler.jpg" width="1920" height="503" style="vertical-align:middle" alt=""/>
                     <div class="carousel-caption">
                         <h1 class="slide-h1 wow bounceInDown" data-wow-duration="1s">BANANA FOR SCALE</h1>
-                        <h2 class="slide-h2 wow bounceInLeft" data-wow-duration="2s" data-wow-delay="1s">ULTIMATE MEASURING TOOL</h2>
+                        <h2 class="slide-h2 wow zoomInUp" data-wow-duration="2s">ULTIMATE MEASURING TOOL</h2>
+                        <!-- <div style="width:400px; margin-right:auto; margin-left:auto; margin-top:10%; "> -->
+                            <form id="upload-form" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+                                <div style="text-align: center;margin-top:10%;">
+                                    <input style="display: inline-block;" type="file" name = "file" accept="image/*" multiple>
+                                    <input style="display: inline-block;" class="btn btn-default" type="submit" value="Submit">
+                                </div>
+                            </form>
+                        <!-- </div> -->
                     </div>
-
+<!--                     <div class="col-lg-8 col-md-8 col-sm-8 col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-12">
                         <form id="upload-form" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
                             <input type="file" name = "file" accept="image/*" multiple>
                             <input type="submit" value="send">
                         </form>
+                    </div> -->
                 </div>
 <!--                 <div class="item">
                     <img src="assets/img/1.jpg" alt="" />
@@ -232,12 +252,7 @@
                  </div>
 
     </section>
-    <!-- CONTACT SECTION END-->
-    <div id="footer-sec">
-           &nbsp;2014 Yourdomain.com | 
-             <a href="http://binarytheme.com" style="font-size: 14px; color: #fff" target="_blank">Design by : binarytheme.com</a>
-
-    </div>
+    
     <!-- FOOTER SECTION END-->
     <!--CORE SCRIPTS-->
     <script src="/static/styles/jquery-1.11.1.js"></script>
