@@ -1,6 +1,5 @@
 import os
 import sys
-import cgi
 from flask import Flask, render_template, request, send_from_directory
 # from flask_bootstrap import Bootstrap
 
