@@ -1,4 +1,5 @@
 import os
+import sys
 from flask import Flask, render_template, request, send_from_directory
 from Image_class import Image
 # from flask_bootstrap import Bootstrap
@@ -26,19 +27,28 @@ def upload():
 		filename = file.filename
 		destination = "/".join([target, filename])
 		print(destination)
+		# print >> sys.stderr, destination
 		file.save(destination)
-
+# Pass the place where the image is stored through this render
 	return render_template("complete.html")
 
-# @app.route('/upload/<filename>')
-# def send_image(filename):
-#     return send_from_directory("images", filename)
+@app.route('/upload/<filename>')
+def send_image(filename):
+    return send_from_directory("images", filename)
 
-# @app.route('/index/<filename>')
-# def send_bootstrap(filename):
-# 	print("Check")
-# 	print("Filename:", filename)
-# 	return send_from_directory("templates/assets/css", filename)
+@app.route('/gallery')
+def get_gallery():
+    image_names = os.listdir('./images')
+    print(image_names)
+    return render_template("gallery.html", image_names=image_names)
+
+@app.route('/upload/user_input', methods=['GET','POST'])
+def select():
+	target_object = request.values['target_object']
+	ref_object = request.values['ref_object']
+
+	return render_template("index.html")
+
 
 if __name__=="__main__":
 	app.run(port=4555, debug=True)
