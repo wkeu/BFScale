@@ -10,18 +10,21 @@ BLUE = (0, 0, 255)
 RED = (255, 0, 0)
 PINK = (255, 0, 255)
 WHITE = (255, 255, 255)
+CYAN = (255,255,0)
 Contour_threshold_Area = 400 #TODO:Make this a value of related to the resolution of the image
 
 class Image:
 
   #Class Varibles
   ref_width = 0.9 #Size of a coin
-  ref_object_index= 2 #Hardcoded Value
+  ref_object_index = 0 #Hardcoded Value
+  measure_object_index =0 
   #TODO: Image is a class varible 
 
   #Class Constructor
-  def __init__(self,fname_image):
+  def __init__(self,fname_image,fpath):
       self.fname_image=fname_image
+      self.fpath=fpath
   #
   # Class Methods
   #
@@ -31,8 +34,12 @@ class Image:
         y_cordinate = (x_cord[1] + y_cord[1]) * 0.5
         return (x_cordinate, y_cordinate)
 
-  def update_ref_object(self,new_ref_index):
-      self.ref_object_index=new_ref_index
+  def update_measure_object_index(self,measure_object_index):
+      self.measure_object_index=measure_object_index-1 #Offset due to indexing of arrays
+
+  def update_ref_object_index(self,ref_object_index):
+      self.ref_object_index=ref_object_index-1 #Offset due to indexing of arrays
+      
 
   #TODO:Comment on how it works
   def get_pixel_per_unit(self,ref_object, ref_width):
@@ -59,7 +66,7 @@ class Image:
         box = cv2.boxPoints(box)
 
     box = np.array(box, dtype="int")
-    box = imutils.perspective.order_points(box)
+    #box = imutils.perspective.order_points(box) Function no longer callable
     print("sucessful excution of get_bounding_box")
     return box
 
@@ -122,7 +129,7 @@ class Image:
       # Drawing the objects according to their size on the image
       cv2.putText(orig, format(index),
                   (int(X_top_left_top_right - 15), int(Y_top_left_top_right - 10)), cv2.FONT_HERSHEY_SIMPLEX, 0.65,
-                  WHITE, 2)
+                  CYAN, 2)
 
   def draw_centre_line(self, X_bottom_left_bottom_right, X_top_left_bottom_left, X_top_left_top_right,
                        X_top_right_bottom_right, Y_bottom_left_bottom_right, Y_top_left_bottom_left,
@@ -144,7 +151,96 @@ class Image:
       cv2.circle(orig, (int(X_bottom_left_bottom_right), int(Y_bottom_left_bottom_right)), 5, RED, -1)
       cv2.circle(orig, (int(X_top_left_bottom_left), int(Y_top_left_bottom_left)), 5, RED, -1)
       cv2.circle(orig, (int(X_top_right_bottom_right), int(Y_top_right_bottom_right)), 5, RED, -1)
+  
+  def generate_index_image(self):
+    #TODO:Bad smell no need to pass self.fname_image
+    #Import image and extract contors
+    #TODO:Cntores should be a class varible as should image
+    cntores, image = self.extract_contors_and_import_image()
+    
+    # TODO: comment on whats happening here, the if statment is never used
+    # TODO:
+    #Wil not work without this line, dont know why
+    cnt = cntores[1] #Extract Each object
+    ref_object=cnt[self.ref_object_index] #Extract this magic number so it is ref_object index
+    
+    #TODO:Bad smell no need to pass self.ref_width
+    pixelsPerUnit = self.get_pixel_per_unit(ref_object, self.ref_width)
+    print("calculated unit pixels ", pixelsPerUnit)
 
+    x=0
+    orig = image.copy()
+    for c in cnt:
+        # if the contour is not sufficiently large, ignore it
+        print(str(x))        
+        x+=1
+        if cv2.contourArea(c) < Contour_threshold_Area: #TODO:Function to dicard small measurments
+            continue
+
+        #TODO:Why is this line needed
+        box = self.get_bounding_box(c)
+        
+        cv2.drawContours(orig, [box.astype("int")], -1, GREEN, 2) #Draw green box around Object
+
+
+        points = self.get_distance_cordinate_points(box)
+        # TODO: Bad Smell Code is repiitive and unreeadible
+        distX, distY = points[0][0], points[0][1]
+        (X_top_left_top_right, Y_top_left_top_right) = points[1][0]
+        (X_bottom_left_bottom_right, Y_bottom_left_bottom_right) = points[1][1]
+        (X_top_left_bottom_left, Y_top_left_bottom_left) = points[1][2]
+        (X_top_right_bottom_right, Y_top_right_bottom_right) = points[1][3]
+        
+        self.print_number_on_object(X_top_left_top_right, X_top_right_bottom_right, Y_top_left_top_right,
+                                 Y_top_right_bottom_right, x, orig)
+       
+    #Save Generated Image    
+    cv2.imwrite("index_image_"+self.fname_image,orig)
+    return("index_image_"+self.fname_image,self.fpath)
+    
+  def generate_measured_image(self):
+    #TODO:Bad smell no need to pass self.fname_image
+    #Import image and extract contors
+    #TODO:Cntores should be a class varible as should image
+    cntores, image = self.extract_contors_and_import_image()
+    
+    # TODO: comment on whats happening here, the if statment is never used
+    # TODO:
+    #Wil not work without this line, dont know why
+    cnt = cntores[1] #Extract Each object
+    ref_object=cnt[self.ref_object_index] #Extract this magic number so it is ref_object index
+    
+    #TODO:Bad smell no need to pass self.ref_width
+    pixelsPerUnit = self.get_pixel_per_unit(ref_object, self.ref_width)
+    print("calculated unit pixels ", pixelsPerUnit)
+
+    orig = image.copy()
+    
+    box = self.get_bounding_box(cnt[measure_object_index])
+
+    cv2.drawContours(orig, [box.astype("int")], -1, GREEN, 2) #Draw green box
+
+    points = self.get_distance_cordinate_points(box)
+    # TODO: Bad Smell Code is repiitive and unreeadible
+    distX, distY = points[0][0], points[0][1]
+    (X_top_left_top_right, Y_top_left_top_right) = points[1][0]
+    (X_bottom_left_bottom_right, Y_bottom_left_bottom_right) = points[1][1]
+    (X_top_left_bottom_left, Y_top_left_bottom_left) = points[1][2]
+    (X_top_right_bottom_right, Y_top_right_bottom_right) = points[1][3]
+        
+        
+    # draw lines between the midpoints
+    
+    self.draw_centre_line(X_bottom_left_bottom_right, X_top_left_bottom_left, X_top_left_top_right,
+                              X_top_right_bottom_right, Y_bottom_left_bottom_right, Y_top_left_bottom_left,
+                              Y_top_left_top_right, Y_top_right_bottom_right, orig)
+
+    self.print_dimensions_on_object(X_top_left_top_right, X_top_right_bottom_right, Y_top_left_top_right,
+                                        Y_top_right_bottom_right, distX, distY, orig, pixelsPerUnit)
+    
+    cv2.imwrite("measured_image_"+self.fname_image,orig)
+    return("measured_image_"+self.fname_image,self.fpath)
+      
   def main(self):
 
     #TODO:Bad smell no need to pass self.fname_image
@@ -206,35 +302,34 @@ class Image:
     cv2.imshow("Image", orig)            
         
 
-
-
-#Test of the class, for developing purposes 
-test_image=Image("Image_refrence.jpg")
-test_image.main()
-
 """
-#	
-#Code to be put in, Order things will happen in
-#
+Test1
+"""
+    
+    
+#Test of Typical Usecase
 
-#Upload image, save as destination
+fname_raw_image="Image_refrence.jpg"
+file_path=""
 
-#Creat instance of class
-working_image = Image(fname_raw_image,path)
+working_image = Image(fname_raw_image,file_path)
+working_image.main()
+
 
 #Generate Image with numbered objects
 fname_index_image,path = working_image.generate_index_image()
 
 #Display this image to user, prenesent with screen to choose ref object number and object to measure number 
-#User inputs these numbers, Clciks Okay
-
+#User inputs these numbers, Clicks Okay
+measure_object_index=4
+ref_object_index=3
 #Update Fields in Class
 working_image.update_ref_object_index(ref_object_index)
 working_image.update_measure_object_index(measure_object_index)
+
 
 #Generate Image with measurement
 fname_measured_image,path = working_image.generate_measured_image()
 
 #Display this measured image to user
 
-"""
