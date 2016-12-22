@@ -2,6 +2,7 @@ import numpy as np
 from scipy.spatial import distance as dist
 import cv2
 import imutils
+from Measurement_class import Measurement
 
 #Global Definitions
 GREEN = (0, 255, 0)
@@ -205,27 +206,35 @@ class Image:
     cv2.imshow("Image", orig)            
         
 
-class Measurment():
-    #Contor of intres
-    #Index
-    #Dimensions x,y
-    #Location
-    #Image with box
-    
-    def __init__(self,cnt):
-        self.contor=cnt
-    
-    def rnd(self):
-        print(self)
 
-#Test of the code
+
+#Test of the class, for developing purposes 
 test_image=Image("Image_refrence.jpg")
 test_image.main()
 
-cntores, image = test_image.extract_contors_and_import_image()
-cnt1=cntores[0]
-cnt2=cntores[1]
-cnt3=cntores[2]
+"""
+#	
+#Code to be put in, Order things will happen in
+#
 
-working_image=Image("Image_refrence.jpg")
+#Upload image, save as destination
 
+#Creat instance of class
+working_image = Image(fname_raw_image,path)
+
+#Generate Image with numbered objects
+fname_index_image,path = working_image.generate_index_image()
+
+#Display this image to user, prenesent with screen to choose ref object number and object to measure number 
+#User inputs these numbers, Clciks Okay
+
+#Update Fields in Class
+working_image.update_ref_object_index(ref_object_index)
+working_image.update_measure_object_index(measure_object_index)
+
+#Generate Image with measurement
+fname_measured_image,path = working_image.generate_measured_image()
+
+#Display this measured image to user
+
+"""
