@@ -18,7 +18,7 @@ class Image:
   #Class Varibles
   ref_width = 0.9 #Size of a coin
   ref_object_index = 0 #Hardcoded Value
-  measure_object_index =0 
+  measure_object_index =0
   #TODO: Image is a class varible 
 
   #Class Constructor
@@ -216,7 +216,7 @@ class Image:
 
     orig = image.copy()
     
-    box = self.get_bounding_box(cnt[measure_object_index])
+    box = self.get_bounding_box(cnt[self.measure_object_index])
 
     cv2.drawContours(orig, [box.astype("int")], -1, GREEN, 2) #Draw green box
 
@@ -306,7 +306,7 @@ class Image:
 Test1
 """
     
-    
+"""
 #Test of Typical Usecase
 
 fname_raw_image="Image_refrence.jpg"
@@ -314,7 +314,6 @@ file_path=""
 
 working_image = Image(fname_raw_image,file_path)
 working_image.main()
-
 
 #Generate Image with numbered objects
 fname_index_image,path = working_image.generate_index_image()
@@ -333,3 +332,4 @@ fname_measured_image,path = working_image.generate_measured_image()
 
 #Display this measured image to user
 
+"""
