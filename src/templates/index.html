@@ -16,10 +16,7 @@ div.button {
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <!--[if IE]>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <![endif]-->
-    <title>The BIG TEMPLATE : RESPONSIVE and FREE</title>
+    <title>BFS</title>
     <!-- BOOTSTRAP CORE STYLE CSS -->
     <link href="{{url_for('static', filename='styles/bootstrap.css')}}" rel="stylesheet" />
     <!-- FONT AWESOME CSS -->
@@ -29,7 +26,6 @@ div.button {
     <!-- CUSTOM STYLE CSS -->
     <link href="{{url_for('static', filename='styles/style.css')}}" rel="stylesheet"  />
     <!-- GOOGLE FONT -->
-    <link href="{{url_for('static', filename='styles/bootstrap.css')}}" rel="stylesheet" />
     <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css' />
 </head>
 <body>
@@ -40,62 +36,23 @@ div.button {
 
             <div class="carousel-inner">
                 <div class="item active">
-
                     <img src="/static/styles/ruler.jpg" width="1920" height="503" style="vertical-align:middle" alt=""/>
+                    
                     <div class="carousel-caption">
                         <h1 class="slide-h1 wow bounceInDown" data-wow-duration="1s">BANANA FOR SCALE</h1>
                         <h2 class="slide-h2 wow zoomInUp" data-wow-duration="2s">ULTIMATE MEASURING TOOL</h2>
-                        <!-- <div style="width:400px; margin-right:auto; margin-left:auto; margin-top:10%; "> -->
                             <form id="upload-form" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
                                 <div style="text-align: center;margin-top:10%;">
                                     <input style="display: inline-block;" type="file" name = "file" accept="image/*" multiple>
                                     <input style="display: inline-block;" class="btn btn-default" type="submit" value="Submit">
                                 </div>
                             </form>
-                        <!-- </div> -->
                     </div>
-<!--                     <div class="col-lg-8 col-md-8 col-sm-8 col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-12">
-                        <form id="upload-form" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
-                            <input type="file" name = "file" accept="image/*" multiple>
-                            <input type="submit" value="send">
-                        </form>
-                    </div> -->
                 </div>
-<!--                 <div class="item">
-                    <img src="assets/img/1.jpg" alt="" />
-                    <div class="carousel-caption">
-                        <h1 class="slide-h1 wow bounceInDown" data-wow-duration="2s">RESPONSIVE DESIGN</h1>
-                        <h2 class="slide-h2 wow bounceInLeft" data-wow-duration="2s" data-wow-delay="1s">FREE TO USE</h2>
-                    </div>
-                </div> -->
-   <!--              <div class="item">
-                    <img src="assets/img/1.jpg" alt="" />
-                    <div class="carousel-caption">
-                        <h1 class="slide-h1 wow bounceInDown" data-wow-duration="2s">HANDCRAFTED </h1>
-                        <h2 class="slide-h2 wow bounceInLeft" data-wow-duration="2s" data-wow-delay="1s">ONLY FOR YOU</h2>
-                    </div>
-                </div> -->
             </div>
-            <!--INDICATORS-->
-<!--             <ol class="carousel-indicators">
-                <li data-target="#carousel-example" data-slide-to="0" class="active"></li>
-                <li data-target="#carousel-example" data-slide-to="1"></li>
-                <li data-target="#carousel-example" data-slide-to="2"></li>
-            </ol> -->
-
         </div>
     </div>
     <!-- HOME SECTION END-->
-<!--     <div id="nav">
-        <ul class="list-unstyled">
-            <li><a data-toggle="tooltip" data-placement="left" title="Home" href="#home-sec">Home</a></li>
-            <li><a data-toggle="tooltip" data-placement="left" title="About" href="#about-sec">About</a></li>
-            <li><a data-toggle="tooltip" data-placement="left" title="Features" href="#features-sec">Features</a></li>
-            <li><a data-toggle="tooltip" data-placement="left" title="Team" href="#team-sec">Team</a></li>
-            <li><a data-toggle="tooltip" data-placement="left" title="Contact" href="#contact-sec">Contact</a></li>
-        </ul>
-    </div> -->
-    <!-- NAV SECTION END-->
     <section id="about-sec">
         <div class="container">
             <div class="row">
@@ -108,7 +65,6 @@ div.button {
                     Final project for Software Engineering.
                     </p>
                 </div>
-
             </div>
         </div>
     </section>
@@ -119,12 +75,11 @@ div.button {
                 <div class="col-lg-8 col-md-8 col-sm-8 col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-12">
                     <h1 data-scroll-reveal="enter from the bottom after 0.1s">How To Use? </h1>
                     <p data-scroll-reveal="enter from the bottom after 0.3s">
-                    Upload your image using the upload button above. In the image there
-                    must be a reference object of known dimensions. The reference object
-                    must also be located on the left hand side of the image.
+                    Upload your image using the upload button above. Select a reference
+                    object in the image and select which object is to be measured. Sit
+                    back and let BFS do it's job!
                     </p>
                 </div>
-
             </div>
             <div class="row ">
                 <div class="col-lg-4 col-md-4 col-sm-4  col-xs-12 text-center" data-scroll-reveal="enter from the bottom after 0.5s">
@@ -138,7 +93,7 @@ div.button {
                     <i class="fa fa-hand-o-up fa-5x" aria-hidden="true"></i>
                     <h4>Choose Reference Object</h4>
                     <p>
-                        Choose Reference object from list (Must be in image)
+                        Choose Reference object and object to be measured in the image
                     </p>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-4  col-xs-12 text-center" data-scroll-reveal="enter from the bottom after 0.9s">
@@ -161,44 +116,45 @@ div.button {
                 <div class="col-lg-8 col-md-8 col-sm-8 col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-12">
                     <h1 data-scroll-reveal="enter from the bottom after 0.1s">TEAM </h1>
                     <p data-scroll-reveal="enter from the bottom after 0.3s">
-                        <!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                  Mauris sagittis felis dolor, id gravida tellus tempor vitae. In efficitur ipsum non faucibus tempus. -->
+                        Team members and main duties
                     </p>
                 </div>
 
             </div>
             <div class="row">
                 <div class="col-lg-2 col-md-2 col-sm-2  col-xs-12 " data-scroll-reveal="enter from the bottom after 0.4s">
-                    <img src="assets/img/1t.jpg" class="img-circle img-responsive set-img" />
+                    <img src="/static/styles/cian.jpg" class="img-circle img-responsive set-img" />
 
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-4  col-xs-12 " data-scroll-reveal="enter from the bottom after 0.5s">
                     <h2>Cian</h2>
                     <p>
-<!--                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                          Lorem ipsum dolor sit amet. -->
+                        GUI and Testing
                     </p>
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-2  col-xs-12 " data-scroll-reveal="enter from the bottom after 0.6s">
-                    <img src="assets/img/2t.jpg" class="img-circle img-responsive set-img" />
+                    <img src="/static/styles/matt.jpg" class="img-circle img-responsive set-img" />
 
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-4  col-xs-12 " data-scroll-reveal="enter from the bottom after 0.7s">
                     <h2>Matt</h2>
                     <p>
-<!--                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                           Lorem ipsum dolor sit amet. -->
+                        Testing and openCV scripting
                     </p>
                 </div>
+            </div>
+            <div class="row">
+                
+            </div>
+            <div class="row">
                 <div class="col-lg-2 col-md-2 col-sm-2  col-xs-12 " data-scroll-reveal="enter from the bottom after 0.6s">
-                    <img src="assets/img/2t.jpg" class="img-circle img-responsive set-img" />
+                    <img src="/static/styles/kaustav.jpg" class="img-circle img-responsive set-img" />
 
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-4  col-xs-12 " data-scroll-reveal="enter from the bottom after 0.7s">
                     <h2>Kaustav</h2>
                     <p>
-<!--                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                           Lorem ipsum dolor sit amet. -->
+                    Testing and openCV scripting
                     </p>
                 </div>
             </div>
@@ -207,53 +163,7 @@ div.button {
 
     </section>
     <!-- TEAM SECTION END-->
-    <section id="contact-sec">
-        <div class="container">
-            <div class="row pad-btm">
-                <div class="col-lg-8 col-md-8 col-sm-8 col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-12">
-                    <h1 data-scroll-reveal="enter from the bottom after 0.1s">CONTACT </h1>
-                    <p data-scroll-reveal="enter from the bottom after 0.3s">
-                        <!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit.  -->
-                  <!-- Mauris sagittis felis dolor, id gravida tellus tempor vitae. In efficitur ipsum non faucibus tempus. -->
-                    </p>
-                </div>
-
-            </div>
-            <div class="row pad-btm">
-
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12  " data-scroll-reveal="enter from the bottom after 0.5s">
-                    <h2>Our Location</h2>
-                    <p>
-                        <!-- 234/89 , UGCH BUILDING HOUSE, -->
-                           <br />
-                        <!-- DOUBLE LANE, NEW YORK CITY,  -->
-                           <br />
-                        <!-- UNITED STATES -->
-                    </p>
-                </div>
-                <div class="col-lg-2 col-md-2 col-sm-2  col-xs-12 " data-scroll-reveal="enter from the bottom after 0.6s">
-                    <img src="assets/img/1t.jpg" class="img-circle img-responsive cnt-img" />
-
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-4  col-xs-12 " data-scroll-reveal="enter from the bottom after 0.6s">
-                    <p>
-<!--                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                          Lorem ipsum dolor sit amet. -->
-                    </p>
-                    <div class="form-group">
-                        <input type="text" class="form-control" />
-                        <br />
-                        <a href="#" class="btn btn-primary">SUBSCRIBE FOR UPDATES</a>
-                    </div>
-                </div>
-
-            </div>
-            
-                 </div>
-
-    </section>
     
-    <!-- FOOTER SECTION END-->
     <!--CORE SCRIPTS-->
     <script src="/static/styles/jquery-1.11.1.js"></script>
     <!--BOOTSTRAP SCRIPTS-->

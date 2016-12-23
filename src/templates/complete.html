@@ -10,17 +10,18 @@
 
 
 <div class="container">
-	<img src="{{url_for('send_image', filename=image_name)}}" style="vertical-align:middle; margin-top:10%;" width="800" height="650" />
-  	<form id="contact" action="{{url_for('select')}}" method="GET" enctype="text/plain">
-    	<fieldset>
-      		<input placeholder="Choose reference object" type="number" tabindex="1" required autofocus name = "ref_object" min="1">
-    	</fieldset>
-    	<fieldset>
-      		<input placeholder="Choose target object" type="number" tabindex="2" required name = "target_object" min="1">
-    	</fieldset>
-    	<fieldset>
-      	<button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
-    	</fieldset>
+<p style="text-align:center;"></p>
+	<img src="{{url_for('send_image', filename=image_name)}}" style="margin-top:10%;" width="400" height="325" />  
+	<form id="contact" action="{{url_for('select')}}" method="GET" enctype="text/plain">
+  	<fieldset>
+    		<input placeholder="Choose reference object" type="text" tabindex="1" required autofocus name = "ref_object" min="1">
+  	</fieldset>
+  	<fieldset>
+    		<input placeholder="Choose target object" type="text" tabindex="2" required name = "target_object" min="1">
+  	</fieldset>
+  	<fieldset>
+    	<button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
+  	</fieldset>
   </form>
 </div>
 
